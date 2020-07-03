@@ -6,7 +6,7 @@
  * @format
  * @flow strict-local
  */
-
+import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import {
   View,
@@ -19,6 +19,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import H1 from './src/components/Text/H1';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import AuthStack from './src/navigators/AuthStack';
 
 const styles = StyleSheet.create({
   textInput: {
@@ -75,7 +79,7 @@ const StylingDasar = () => {
   );
 };
 
-const App = () => {
+const Todo = () => {
   //    nama state, nama fnc utk setstate
   const [inputText, setInputText] = useState('');
   const [todoList, setTodoList] = useState([]);
@@ -107,9 +111,8 @@ const App = () => {
     });
     setTodoList(newArr);
   };
-
   return (
-    <View style={{flex: 1}}>
+    <View>
       <SafeAreaView />
       <H1 style={{fontSize: 50}}>Halo Dunia</H1>
       <TextInput
@@ -126,6 +129,19 @@ const App = () => {
         renderItem={renderTodoList}
       />
     </View>
+  );
+};
+
+const Tab = createBottomTabNavigator();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="AuthStack" component={AuthStack} />
+        <Tab.Screen name="Todo" component={Todo} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
